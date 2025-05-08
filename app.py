@@ -91,7 +91,6 @@ def anime_list():
     search_query = request.args.get("search", "").lower()
     data = load_data()
 
-    # Применяем фильтрацию по статусу
     if status_filter:
         data = [a for a in data if a.get("user_status") == status_filter]
 
