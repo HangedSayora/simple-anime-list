@@ -194,6 +194,7 @@ select:focus {
 
 .add-button {
   margin-bottom: 2%;
+  user-select: none;
 }
 
 .anime-details {
@@ -224,6 +225,15 @@ select:focus {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
+}
+
+.move-buttons {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  right: 210.5%;
 }
 
 .left-button {

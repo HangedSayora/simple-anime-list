@@ -46,9 +46,14 @@ async function fetchAnimeList() {
             <button onclick="window.open('${anime.url}', '_blank')">Смотреть</button>
           </div>
           <div class="right-buttons">
+            <div class="move-buttons">
+              <button onclick="moveAnime('${anime.name}', 'up')">↑</button>
+              <button onclick="moveAnime('${anime.name}', 'down')">↓</button>
+            </div>
             <button onclick="updateAnime('${anime.name}')">Обновить</button>
             <button onclick="showDeleteModal('${anime.name}', '${anime.russian}')">Удалить</button>
           </div>
+
         </div>
       </div>
     `;
@@ -237,5 +242,24 @@ window.addEventListener('click', function(event) {
     cancelForm();
   }
 });
+
+function moveAnime(name, direction) {
+  fetch(`/api/anime/${encodeURIComponent(name)}/move?direction=${direction}`, {
+    method: 'PUT'
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Move failed');
+    }
+    return response.text();
+  })
+  .then(() => {
+    fetchAnimeList(); // обновляем список после перемещения
+  })
+  .catch(err => {
+    console.error(err);
+  });
+}
+
 
 fetchAnimeList();

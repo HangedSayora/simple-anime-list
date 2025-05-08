@@ -173,6 +173,28 @@ def delete_anime(name):
     save_data(data)
     return "Deleted"
 
+@app.route("/api/anime/<name>/move", methods=["PUT"])
+def move_anime(name):
+    direction = request.args.get("direction")  # "up" или "down"
+    if direction not in ("up", "down"):
+        return "Invalid direction", 400
+
+    data = load_data()
+    index = next((i for i, a in enumerate(data) if a["name"] == name), None)
+    
+    if index is None:
+        return "Anime not found", 404
+
+    if direction == "up" and index > 0:
+        data[index], data[index - 1] = data[index - 1], data[index]
+    elif direction == "down" and index < len(data) - 1:
+        data[index], data[index + 1] = data[index + 1], data[index]
+    else:
+        return "Cannot move in that direction", 400
+
+    save_data(data)
+    return "Moved"
+
 
 @app.route('/')
 def serve_index():
