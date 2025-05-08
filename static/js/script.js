@@ -12,7 +12,6 @@ async function fetchAnimeList() {
   const animeList = data.anime_list;
   const totalPages = data.total_pages;
 
-  // Отображаем аниме на странице
   const container = document.getElementById('anime-list');
   container.innerHTML = '';
 
@@ -146,7 +145,6 @@ const placeholders = [
   'Введите название аниме...'
 ];
 
-
 let index = 0;
 setInterval(() => {
   const input = document.getElementById('anime-title-search');
@@ -207,7 +205,6 @@ document.getElementById('anime-title-search').addEventListener('input', () => {
   fetchAnimeList();
 });
 
-// Обработчик изменения фильтра по статусу
 document.getElementById('status-filter').addEventListener('change', () => {
   currentPage = 1;
   fetchAnimeList();
@@ -218,22 +215,19 @@ function showDeleteModal(name) {
   document.getElementById('del-form').style.display = 'flex';
 }
 
-// Закрываем модалку
 function closeDeleteModal() {
   animeToDelete = null;
   document.getElementById('del-form').style.display = 'none';
 }
 
-// Подтверждение удаления
 document.getElementById('confirmDelete').addEventListener('click', async () => {
   if (animeToDelete) {
     await fetch(`/api/anime/${encodeURIComponent(animeToDelete)}`, { method: 'DELETE' });
-    fetchAnimeList();  // Обновляем список
+    fetchAnimeList();
     closeDeleteModal();
   }
 });
 
-// Отмена
 document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
 
 fetchAnimeList();
