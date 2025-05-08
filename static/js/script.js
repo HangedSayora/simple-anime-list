@@ -126,10 +126,6 @@ async function fetchAnimeList() {
       document.getElementById('del-form').style.display = 'none';
     };
 
-function cancelAction() {
-      document.getElementById('add-form').style.display = 'none';
-    }
-
 function showAddForm() {
       document.getElementById('add-form').style.display = 'flex';
     }
@@ -227,6 +223,19 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+function cancelForm() {
+  document.getElementById('add-form').style.display = 'none';
+  document.getElementById('del-form').style.display = 'none';
+}
+
+
+window.addEventListener('click', function(event) {
+  const addForm = document.getElementById('add-form');
+  const delForm = document.getElementById('del-form');
+
+  if (event.target === addForm || event.target === delForm) {
+    cancelForm();
+  }
+});
 
 fetchAnimeList();

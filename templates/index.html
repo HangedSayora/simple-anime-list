@@ -28,14 +28,14 @@
       <input type="text" id="anime-title" placeholder="Название"><br>
       <input type="text" id="anime-url" placeholder="URL"><br>
       <button onclick="addAnime()">Сохранить</button>
-      <button onclick="cancelAction()">Отмена</button>
+      <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
   <div id="del-form" class="modal">
     <div class="modal-content">
       <p id="modalMessage"></p>
       <button id="confirmDelete">Удалить</button>
-      <button id="cancelDelete">Отмена</button>
+      <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
   <div id="anime-list"></div>

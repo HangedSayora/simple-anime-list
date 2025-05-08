@@ -20,6 +20,7 @@
   text-align: center;
   transition: transform 0.2s ease;
   animation: fadeIn 0.2s ease-out;
+  user-select: none;
 }
 
 @keyframes fadeIn {
