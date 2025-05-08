@@ -254,7 +254,7 @@ function moveAnime(name, direction) {
     return response.text();
   })
   .then(() => {
-    fetchAnimeList(); // обновляем список после перемещения
+    fetchAnimeList();
   })
   .catch(err => {
     console.error(err);
