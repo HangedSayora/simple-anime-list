@@ -1,0 +1,54 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>My Cuties Anime List</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <h1>My Cuties Anime List</h1>
+  <button class="add-button" onclick="showAddForm()">Добавить аниме</button>
+  <label class="sort-label">
+    <select id="status-filter" onchange="fetchAnimeList()">
+        <option value="">Все</option>
+        <option value="буду смотреть">Буду смотреть</option>
+        <option value="смотрю">Смотрю</option>
+        <option value="просмотрено">Просмотрено</option>
+        <option value="любимое">Любимое</option>
+        <option value="брошено">Брошено</option>
+    </select>
+    <input type="text" class="search-label" id="anime-title-search" placeholder="Введите название аниме..."><br>
+  </label>
+
+  <!-- Add form -->
+  <div id="add-form" class="modal">
+    <div class="modal-content">
+      <h2>Добавить аниме</h2>
+      <input type="text" id="anime-title" placeholder="Название"><br>
+      <input type="text" id="anime-url" placeholder="URL"><br>
+      <button onclick="addAnime()">Сохранить</button>
+      <button onclick="cancelAction()">Отмена</button>
+    </div>
+  </div>
+  <div id="del-form" class="modal">
+    <div class="modal-content">
+      <p id="modalMessage">Вы уверены, что хотите удалить?</p>
+      <button id="confirmDelete">Удалить</button>
+      <button id="cancelDelete">Отмена</button>
+    </div>
+  </div>
+  <div id="anime-list"></div>
+
+   <!-- Контейнер для пагинации -->
+  <div id="pagination" class="pagination-container">
+    <div id="pagination-prev" class="pagination-prev"></div>
+    <div id="pagination-page" class="pagination-page"></div>
+    <div id="pagination-next" class="pagination-next"></div>
+  </div>
+
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
