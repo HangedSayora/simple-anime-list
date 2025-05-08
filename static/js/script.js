@@ -47,7 +47,7 @@ async function fetchAnimeList() {
           </div>
           <div class="right-buttons">
             <button onclick="updateAnime('${anime.name}')">Обновить</button>
-            <button onclick="deleteAnime('${anime.name}')">Удалить</button>
+            <button onclick="showDeleteModal('${anime.name}', '${anime.russian}')">Удалить</button>
           </div>
         </div>
       </div>
@@ -109,10 +109,6 @@ async function fetchAnimeList() {
       } else {
         alert("Не удалось получить данные с Shikimori.");
       }
-    }
-
-    async function deleteAnime(name) {
-      showDeleteModal(name);
     }
 
     async function changeStatus(name, newStatus) {
@@ -210,9 +206,12 @@ document.getElementById('status-filter').addEventListener('change', () => {
   fetchAnimeList();
 });
 
-function showDeleteModal(name) {
+function showDeleteModal(name, russian) {
   animeToDelete = name;
   document.getElementById('del-form').style.display = 'flex';
+
+  const modalMessage = document.getElementById('modalMessage');
+  modalMessage.textContent = `Вы уверены, что хотите удалить "${russian}"?`;
 }
 
 function closeDeleteModal() {
