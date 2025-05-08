@@ -58,7 +58,6 @@
   background-color: #45a049;
 }
 
-/* Общий стиль */
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f4f4f9;
@@ -74,7 +73,6 @@ h1 {
   margin-bottom: 35px;
 }
 
-/* Кнопка + */
 button {
   background-color: #4CAF50;
   color: white;
