@@ -59,7 +59,6 @@ function generateAnimeHTML(anime, hideButtons = false, isSeason = false) {
         <div class="left-button">
           <button onclick="window.open('${anime.url}', '_blank')">Смотреть</button>
           ${!isSeason && !hideButtons ? `<button onclick="showAllSeasons('${anime.name}')">Все сезоны</button>` : ''}
-          ${!isSeason && hideButtons ? `<button onclick="fetchAnimeList()">Весь список</button>` : ''}
           ${isSeason ? `<button onclick="fetchAnimeList()">Весь список</button>` : ''}
         </div>
         <div class="right-buttons">
@@ -86,6 +85,27 @@ async function fetchAnimeInfo(name) {
   const res = await fetch(`https://shikimori.one/api/animes?search=${encodeURIComponent(name)}`);
   const data = await res.json();
   return data.length ? data[0] : null;
+}
+
+
+
+
+async function loadAllAnimePages() {
+  let page = 1;
+  let allAnime = [];
+  let totalPages = 1;
+
+  do {
+    const res = await fetch(`/api/anime-list?page=${page}`);
+    const data = await res.json();
+    if (Array.isArray(data.anime_list)) {
+      allAnime.push(...data.anime_list);
+    }
+    totalPages = data.total_pages || 1;
+    page++;
+  } while (page <= totalPages);
+
+  return allAnime;
 }
 //------------------------------------------------------------------------------------------
 
@@ -253,11 +273,8 @@ function updatePaginationControls(currentPage, totalPages) {
 
 
 async function updateAnime(name) {
-  if (!animeList.length) {
-    const res = await fetch('/api/anime-list');
-    const data = await res.json();
-
-    animeList = data.anime_list || [];
+  if (!animeList.length || true) {
+    animeList = await loadAllAnimePages();
   }
 
   if (!Array.isArray(animeList)) {

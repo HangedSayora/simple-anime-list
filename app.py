@@ -334,7 +334,6 @@ def add_anime():
     info["url"] = url
     info["user_status"] = user_status
 
-    # Добавляем копию как первый сезон
     info["seasons"] = [info.copy()]
 
     data = load_data()
