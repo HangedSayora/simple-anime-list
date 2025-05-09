@@ -235,11 +235,13 @@ select:focus {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
-  right: 210.5%;
+  right: 64.7%;
 }
 
 .left-button {
    position: relative;
+   display: flex;
+   gap: 15px;
    right: 151px;
   }
 

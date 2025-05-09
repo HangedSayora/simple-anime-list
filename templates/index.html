@@ -10,7 +10,7 @@
   <h1 style="user-select: none;">My Cuties Anime List</h1>
   <button  class="add-button" onclick="showAddForm()">Добавить аниме</button>
   <label style="user-select: none;" class="sort-label">
-    <select style="user-select: none;"  id="status-filter" onchange="fetchAnimeList()">
+    <select style="user-select: none;"  id="status-filter">
         <optgroup label="Статус просмотра">
           <option value="">Все</option>
           <option value="буду смотреть">Буду смотреть</option>
@@ -29,7 +29,7 @@
     <input type="text" class="search-label" id="anime-title-search" placeholder="Введите название аниме..."><br>
   </label>
 
-  <!-- Add form -->
+  <!-- Add anime form -->
   <div id="add-form" class="modal">
     <div class="modal-content">
       <h2 style="user-select: none;">Добавить аниме</h2>
@@ -39,16 +39,36 @@
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
+  <!-- Add season form -->
+  <div id="season-form" class="modal">
+    <div class="modal-content">
+      <h2></h2>
+      <input type="text" id="season-title" placeholder="Название"><br>
+      <input type="text" id="season-url" placeholder="URL"><br>
+      <button onclick="addSeason()">Сохранить</button>
+      <button onclick="cancelForm()">Отмена</button>
+    </div>
+  </div>
+  <!-- Delete anime form -->
   <div id="del-form" class="modal">
     <div class="modal-content">
       <p  id="modalMessage"></p>
-      <button id="confirmDelete">Удалить</button>
+      <button onclick="confirmDelete()">Удалить</button>
+      <button onclick="cancelForm()">Отмена</button>
+    </div>
+  </div>
+  <!-- Change anime url form -->
+  <div id="change-form" class="modal">
+    <div class="modal-content">
+      <h2></h2>
+      <input type="text" id="change-url" placeholder="URL"><br>
+      <button onclick="confirmChangeURL()">Сохранить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
   <div  id="anime-list"></div>
 
-   <!-- Контейнер для пагинации -->
+   <!-- Container for pagination -->
   <div  id="pagination" class="pagination-container">
     <div id="pagination-prev" class="pagination-prev"></div>
     <div id="pagination-page" class="pagination-page"></div>
@@ -56,7 +76,7 @@
   </div>
 
 
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
 
