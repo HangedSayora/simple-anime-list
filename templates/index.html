@@ -7,16 +7,24 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-  <h1>My Cuties Anime List</h1>
-  <button class="add-button" onclick="showAddForm()">Добавить аниме</button>
-  <label class="sort-label">
-    <select id="status-filter" onchange="fetchAnimeList()">
-        <option value="">Все</option>
-        <option value="буду смотреть">Буду смотреть</option>
-        <option value="смотрю">Смотрю</option>
-        <option value="просмотрено">Просмотрено</option>
-        <option value="любимое">Любимое</option>
-        <option value="брошено">Брошено</option>
+  <h1 style="user-select: none;">My Cuties Anime List</h1>
+  <button  class="add-button" onclick="showAddForm()">Добавить аниме</button>
+  <label style="user-select: none;" class="sort-label">
+    <select style="user-select: none;"  id="status-filter" onchange="fetchAnimeList()">
+        <optgroup label="Статус просмотра">
+          <option value="">Все</option>
+          <option value="буду смотреть">Буду смотреть</option>
+          <option value="смотрю">Смотрю</option>
+          <option value="просмотрено">Просмотрено</option>
+          <option value="любимое">Любимое</option>
+          <option value="брошено">Брошено</option>
+        </optgroup>
+        <optgroup label="Статус выхода">
+          <option value="вышло">Вышло</option>
+          <option value="выходит">Выходит</option>
+          <option value="анонсировано">Анонсировано</option>
+          <option value="отменено">Отменено</option>
+        </optgroup>
     </select>
     <input type="text" class="search-label" id="anime-title-search" placeholder="Введите название аниме..."><br>
   </label>
@@ -24,7 +32,7 @@
   <!-- Add form -->
   <div id="add-form" class="modal">
     <div class="modal-content">
-      <h2>Добавить аниме</h2>
+      <h2 style="user-select: none;">Добавить аниме</h2>
       <input type="text" id="anime-title" placeholder="Название"><br>
       <input type="text" id="anime-url" placeholder="URL"><br>
       <button onclick="addAnime()">Сохранить</button>
@@ -33,15 +41,15 @@
   </div>
   <div id="del-form" class="modal">
     <div class="modal-content">
-      <p id="modalMessage"></p>
+      <p  id="modalMessage"></p>
       <button id="confirmDelete">Удалить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
-  <div id="anime-list"></div>
+  <div  id="anime-list"></div>
 
    <!-- Контейнер для пагинации -->
-  <div id="pagination" class="pagination-container">
+  <div  id="pagination" class="pagination-container">
     <div id="pagination-prev" class="pagination-prev"></div>
     <div id="pagination-page" class="pagination-page"></div>
     <div id="pagination-next" class="pagination-next"></div>

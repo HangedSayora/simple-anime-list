@@ -46,20 +46,20 @@ def get_shikimori_anime(title):
     released = format_date(anime["released_on"])
 
     if anime["status"] in ("ongoing", "released"):
-        label_aired = "Начал выходить: "
+        label_aired = "Начало выходить: "
     else:
-        label_aired = "Анонсирован: "
+        label_aired = "Анонсировано: "
     
 
     status = anime["status"]
     if status == "ongoing":
         status_label = "Выходит"
     elif status == "released" and released != "Не закончено":
-        status_label = "Вышел"
+        status_label = "Вышло"
     elif status == "anons":
         status_label = "Анонсировано"
     else:
-        status_label = "Брошено"
+        status_label = "Отменено"
 
     return {
         "name": romaji_name,
@@ -91,7 +91,11 @@ def anime_list():
     data = load_data()
 
     if status_filter:
-        data = [a for a in data if a.get("user_status") == status_filter]
+        print(status_filter)
+        if status_filter in ("вышло", "выходит", "анонсировано", "отменено"):
+           data = [a for a in data if a.get("status", "").lower() == status_filter]
+        else:
+           data = [a for a in data if a.get("user_status") == status_filter]
 
     if search_query:
         data = [
