@@ -182,7 +182,7 @@ async function changeUrl(name) {
 
 function changePage(page) {
   currentPage = page;
-  fetchAnimeList();
+  updateAnimeListOverall();
 }
 //------------------------------------------------------------------------------------------
 
