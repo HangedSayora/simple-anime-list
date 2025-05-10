@@ -230,12 +230,13 @@ select:focus {
 }
 
 .move-buttons {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
-  right: 64.7%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .left-button {
@@ -254,6 +255,8 @@ select:focus {
   color: white;
   border: none;
   cursor: pointer;
+  max-height: 40px;
+  overflow: hidden;
 }
 
 .anime-buttons button:hover {
