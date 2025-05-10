@@ -282,15 +282,42 @@ async function updateAnime(name) {
     return;
   }
 
-  const anime = animeList.find(a => a.name === name);
-  if (!anime) return alert("Аниме не найдено");
+  let foundAnime = null;
+  let parentAnime = null;
 
-  const info = await fetchAnimeInfo(anime.name);
+  for (const anime of animeList) {
+    if (anime.name === name) {
+      foundAnime = anime;
+      break;
+    }
+
+    if (Array.isArray(anime.seasons)) {
+      for (const season of anime.seasons) {
+        if (season.name === name) {
+          foundAnime = season;
+          parentAnime = anime;
+          break;
+        }
+      }
+    }
+
+    if (foundAnime) break;
+  }
+
+  if (!foundAnime) {
+    return alert("Аниме не найдено");
+  }
+
+  const info = await fetchAnimeInfo(foundAnime.name);
   if (info) {
-    const updated = { ...info, url: anime.url, user_status: anime.user_status };
+    const updated = {
+      ...info,
+      url: foundAnime.url,
+      user_status: foundAnime.user_status
+    };
     console.log("Updated anime:", updated);
 
-    const res = await fetch(`/api/anime/${encodeURIComponent(anime.name)}`, {
+    const res = await fetch(`/api/anime/${encodeURIComponent(foundAnime.name)}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)

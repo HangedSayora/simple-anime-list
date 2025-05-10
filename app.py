@@ -195,22 +195,33 @@ def update_anime(name):
             seasons = anime.get("seasons", [])
             season_found = False
 
-            # Update seasons anime
+            # Add copy anime how one season
             for season in seasons:
                 if season.get("name") == info["name"]:
                     season.update(info)
-                    season_found = True
                     break
-
-            # If not season found
-            if not season_found:
+            else:
                 seasons.insert(0, info.copy())
 
             anime["seasons"] = seasons
             data[i] = anime
-
             save_data(data)
             return "Updated"
+
+        # Update seasons anime
+        for j, season in enumerate(anime.get("seasons", [])):
+            if season["name"] == name:
+                info = get_shikimori_anime(name)
+                if not info:
+                    return "Not found", 404
+
+                info["url"] = req.get("url", season.get("url", ""))
+                info["user_status"] = new_status or season.get("user_status", "буду смотреть")
+                anime["seasons"][j] = {**season, **info}
+                data[i] = anime
+
+                save_data(data)
+                return "Updated (season)"
 
     return "Anime not found", 404
 
