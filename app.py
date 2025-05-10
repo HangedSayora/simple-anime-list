@@ -188,9 +188,15 @@ def update_anime(name):
                 return "Not found", 404
 
             # Update main anime
+            anime["image_original"] = info.get("image_original", anime.get("image_original", "https://shikimori.one/assets/globals/missing_original.jpg"))
+            anime["score"] = info.get("score", anime.get("score", 0))
+            anime["episodes"] = info.get("episodes", anime.get("episodes", 0))
+            anime["aired_label"] = info.get("aired_label", anime.get("aired_label", "Начало выходить: "))
+            anime["aired_on"] = info.get("aired_on", anime.get("aired_on", "Неизвестно"))
+            anime["released_on"] = info.get("released_on", anime.get("released_on", "Неизвестно"))
+            anime["status"] = info.get("status", anime.get("status", "Неизвестно"))
             anime["url"] = info.get("url", anime.get("url", ""))
             anime["user_status"] = new_status or anime.get("user_status", "буду смотреть")
-            anime["episodes"] = info.get("episodes", anime.get("episodes", 0))
 
             seasons = anime.get("seasons", [])
             season_found = False
@@ -201,7 +207,10 @@ def update_anime(name):
                     season.update(info)
                     break
             else:
-                seasons.insert(0, info.copy())
+                season_data = info.copy()
+                season_data["url"] = info.get("url", anime.get("url", ""))
+                season_data["user_status"] = new_status or anime.get("user_status", "буду смотреть")
+                seasons.insert(0, season_data)
 
             anime["seasons"] = seasons
             data[i] = anime
