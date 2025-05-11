@@ -5,12 +5,13 @@
   <meta charset="UTF-8">
   <title>My Cuties Anime List</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
 </head>
 <body>
-  <h1 style="user-select: none;">My Cuties Anime List</h1>
-  <button  class="add-button" onclick="showAddForm()">Добавить аниме</button>
-  <label style="user-select: none;" class="sort-label">
-    <select style="user-select: none;"  id="status-filter">
+  <h1>My Cuties Anime List</h1>
+  <button class="add-button" onclick="showAddForm()">Добавить аниме</button>
+  <label class="sort-label">
+    <select class="anime-sort-label-select" id="status-filter">
         <optgroup label="Статус просмотра">
           <option value="">Все</option>
           <option value="буду смотреть">Буду смотреть</option>
@@ -20,10 +21,10 @@
           <option value="брошено">Брошено</option>
         </optgroup>
         <optgroup label="Статус выхода">
-          <option value="вышло">Вышло</option>
-          <option value="выходит">Выходит</option>
-          <option value="анонсировано">Анонсировано</option>
-          <option value="отменено">Отменено</option>
+          <option value="Вышло">Вышло</option>
+          <option value="Выходит">Выходит</option>
+          <option value="Анонсировано">Анонсировано</option>
+          <option value="Отменено">Отменено</option>
         </optgroup>
     </select>
     <input type="text" class="search-label" id="anime-title-search" placeholder="Введите название аниме..."><br>
@@ -32,10 +33,10 @@
   <!-- Add anime form -->
   <div id="add-form" class="modal">
     <div class="modal-content">
-      <h2 style="user-select: none;">Добавить аниме</h2>
+      <h2>Добавить аниме</h2>
       <input type="text" id="anime-title" placeholder="Название"><br>
       <input type="text" id="anime-url" placeholder="URL"><br>
-      <button onclick="addAnime()">Сохранить</button>
+      <button onclick="addAnime()">Добавить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
@@ -45,14 +46,14 @@
       <h2></h2>
       <input type="text" id="season-title" placeholder="Название"><br>
       <input type="text" id="season-url" placeholder="URL"><br>
-      <button onclick="addSeason()">Сохранить</button>
+      <button onclick="addSeason()">Добавить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>
   <!-- Delete anime form -->
   <div id="del-form" class="modal">
     <div class="modal-content">
-      <p  id="modalMessage"></p>
+      <h2></h2>
       <button onclick="confirmDelete()">Удалить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
@@ -62,7 +63,7 @@
     <div class="modal-content">
       <h2></h2>
       <input type="text" id="change-url" placeholder="URL"><br>
-      <button onclick="confirmChangeURL()">Сохранить</button>
+      <button onclick="confirmChangeURL()">Изменить</button>
       <button onclick="cancelForm()">Отмена</button>
     </div>
   </div>

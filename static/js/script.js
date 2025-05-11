@@ -3,10 +3,12 @@ let currentPage = 1;
 let animeToDelete = null;
 let seasonAnime = null;
 let animeToChangeURL = null;
+let parent_id_v = 0;
 
 // Main functions
 async function fetchAnimeList() {
   seasonAnime = null;
+   parent_id_v = 0;
   const searchQuery = document.getElementById('anime-title-search').value.toLowerCase();
   const statusFilter = document.getElementById('status-filter').value;
 
@@ -34,9 +36,9 @@ async function fetchAnimeList() {
 function generateAnimeHTML(anime, hideButtons = false, isSeason = false) {
   return `
     <div class="anime-left">
-      <img src="${anime.image_original}" class="anime-img" height="230" alt="preview">
+      <img src="${anime.preview_url}" class="anime-img" height="230" alt="preview">
       <label class="anime-con" style="margin-top: 10px;">
-        <select onchange="changeStatus('${anime.name}', this.value)">
+        <select onchange="changeStatus('${anime.original_name}', this.value)">
           <option value="буду смотреть" ${anime.user_status === 'буду смотреть' ? 'selected' : ''}>Буду смотреть</option>
           <option value="смотрю" ${anime.user_status === 'смотрю' ? 'selected' : ''}>Смотрю</option>
           <option value="просмотрено" ${anime.user_status === 'просмотрено' ? 'selected' : ''}>Просмотрено</option>
@@ -46,32 +48,32 @@ function generateAnimeHTML(anime, hideButtons = false, isSeason = false) {
       </label>
     </div>
     <div class="anime-right">
-      <strong class="anime-title">${anime.russian}</strong>
-      <p class="anime-title2" style="color: #888;">(${anime.name})</p>
+      <strong class="anime-title">${anime.russian_name}</strong>
+      <p class="anime-title2" style="color: #888;">(${anime.original_name})</p>
       <div class="anime-details">
         <p><strong>Эпизоды:</strong> ${anime.episodes}</p>
-        <p><strong>Рейтинг:</strong> ${anime.score}</p>
+        <p><strong>Рейтинг:</strong> ${anime.rating}</p>
         <p><strong>Статус:</strong> ${anime.status}</p>
-        <p><strong>${anime.aired_label}</strong>${anime.aired_on}</p>
-        <p><strong>Вышел: </strong>${anime.released_on}</p>
+        <p><strong>${anime.start_date_label}</strong>${anime.start_date}</p>
+        <p><strong>Вышел: </strong>${anime.last_date}</p>
       </div>
       <div class="anime-buttons">
-        <div class="left-button">
-          <button onclick="window.open('${anime.url}', '_blank')">Смотреть</button>
-          ${!isSeason && !hideButtons ? `<button onclick="showAllSeasons('${anime.name}')">Все сезоны</button>` : ''}
+        <div class="left-buttons">
+          <button onclick="window.open('${anime.anime_url}', '_blank')">Смотреть</button>
+          ${!isSeason && !hideButtons ? `<button onclick="showAllSeasons('${anime.original_name}', '${anime.id}')">Все сезоны</button>` : ''}
           ${isSeason ? `<button onclick="fetchAnimeList()">Весь список</button>` : ''}
         </div>
         <div class="right-buttons">
-          ${!hideButtons && !isSeason ? `
-            <div class="move-buttons">
-              <button onclick="moveAnime('${anime.name}', 'up')">↑</button>
-              <button onclick="moveAnime('${anime.name}', 'down')">↓</button>
-            </div>
-            <button onclick="showSeasonForm('${anime.russian}', '${anime.name}')">Добавить сезон</button>
-          ` : ''}
-            <button onclick="showChangeForm('${anime.russian}', '${anime.name}')">Изменить</button>
-            <button onclick="updateAnime('${anime.name}')">Обновить</button>
-            <button onclick="showDeleteForm('${anime.name}', '${anime.russian}')">Удалить</button>
+          <div class="move-buttons">
+            ${!isSeason && !hideButtons ? `<button onclick="moveAnime('${anime.id}', 'up')"><img src="/static/icons/up_arrow.png" width="16" height="16" alt="move_up_anime" /></button>` : ''}
+            ${!isSeason && !hideButtons ? `<button onclick="moveAnime('${anime.id}', 'down')"><img src="/static/icons/down_arrow.png" width="16" height="16" alt="move_down_anime" /></button>` : ''}
+            ${isSeason && !hideButtons ? `<button onclick="moveSeason('${anime.id}', 'up', '${parent_id_v}')"><img src="/static/icons/up_arrow.png" width="16" height="16" alt="move_up_season" /></button>` : ''}
+            ${isSeason && !hideButtons ? `<button onclick="moveSeason('${anime.id}', 'down', '${parent_id_v}')"><img src="/static/icons/down_arrow.png" width="16" height="16" alt="move_down_season" /></button>` : ''}
+          </div>
+          ${!isSeason && !hideButtons ? `<button onclick="showSeasonForm('${anime.russian_name}', '${anime.original_name}')">Добавить сезон</button>` : ''}
+          <button onclick="showChangeForm('${anime.russian_name}', '${anime.original_name}')">Изменить</button>
+          <button onclick="updateAnime('${anime.original_name}')">Обновить</button>
+          <button onclick="showDeleteForm('${anime.original_name}', '${anime.russian_name}')">Удалить</button>
         </div>
       </div>
     </div>
@@ -171,7 +173,7 @@ async function changeUrl(name) {
   await fetch(`/api/anime/${encodeURIComponent(name)}/url`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url: newUrl })
+    body: JSON.stringify({ anime_url: newUrl })
   });
 
   updateAnimeListOverall();
@@ -179,6 +181,9 @@ async function changeUrl(name) {
   animeToChangeURL = null;
   document.getElementById('change-form').style.display = 'none';
 }
+
+
+
 
 function changePage(page) {
   currentPage = page;
@@ -217,7 +222,7 @@ function confirmChangeURL() {
 // Updates functions
 async function updateAnimeListOverall() {
   if (seasonAnime) {
-    await showAllSeasons(seasonAnime); 
+    await showAllSeasons(seasonAnime, parent_id_v);
   } else {
     await fetchAnimeList();
   }
@@ -286,14 +291,14 @@ async function updateAnime(name) {
   let parentAnime = null;
 
   for (const anime of animeList) {
-    if (anime.name === name) {
+    if (anime.original_name === name || anime.russian_name === name) {
       foundAnime = anime;
       break;
     }
 
     if (Array.isArray(anime.seasons)) {
       for (const season of anime.seasons) {
-        if (season.name === name) {
+        if (season.original_name === name || season.russian_name === name) {
           foundAnime = season;
           parentAnime = anime;
           break;
@@ -308,16 +313,17 @@ async function updateAnime(name) {
     return alert("Аниме не найдено");
   }
 
-  const info = await fetchAnimeInfo(foundAnime.name);
+  const info = await fetchAnimeInfo(foundAnime.original_name);
   if (info) {
     const updated = {
       ...info,
-      url: foundAnime.url,
-      user_status: foundAnime.user_status
+      anime_url: foundAnime.anime_url || foundAnime.url || "",
+      user_status: foundAnime.user_status || "буду смотреть"
     };
+
     console.log("Updated anime:", updated);
 
-    const res = await fetch(`/api/anime/${encodeURIComponent(foundAnime.name)}`, {
+    const res = await fetch(`/api/anime/${encodeURIComponent(foundAnime.original_name)}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)
@@ -343,8 +349,8 @@ async function updateAnime(name) {
 
 
 // Move Anime in main list
-function moveAnime(name, direction) {
-  fetch(`/api/anime/${encodeURIComponent(name)}/move?direction=${direction}`, {
+function moveAnime(id, direction) {
+  fetch(`/api/anime/${encodeURIComponent(id)}/move?direction=${direction}`, {
     method: 'PUT'
   })
   .then(response => {
@@ -354,7 +360,25 @@ function moveAnime(name, direction) {
     return response.text();
   })
   .then(() => {
-    fetchAnimeList();
+    updateAnimeListOverall();
+  })
+  .catch(err => {
+    console.error(err);
+  });
+}
+
+function moveSeason(id, direction, parent_id) {
+  fetch(`/api/season/${encodeURIComponent(id)}/move?direction=${direction}&parent_id=${parent_id}`, {
+    method: 'PUT'
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Move failed');
+    }
+    return response.text();
+  })
+  .then(() => {
+    updateAnimeListOverall();
   })
   .catch(err => {
     console.error(err);
@@ -367,7 +391,8 @@ function moveAnime(name, direction) {
 
 
 // Shows functions
-async function showAllSeasons(animeName) {
+async function showAllSeasons(animeName, parent_id) {
+  parent_id_v = parent_id;
   updatePaginationControls(0, 0);
   const searchQuery = document.getElementById('anime-title-search').value.toLowerCase();
   const statusFilter = document.getElementById('status-filter').value;
@@ -377,14 +402,16 @@ async function showAllSeasons(animeName) {
   const container = document.getElementById('anime-list');
   container.innerHTML = '';
 
-  const anime = data.anime_list.find(a => a.name === animeName);
+  const anime = data.anime_list.find(a =>
+    a.original_name === animeName || a.russian_name === animeName
+  );
   if (!anime) return;
 
   if (anime.seasons?.length) {
     anime.seasons.forEach(season => {
       const seasonEl = document.createElement('div');
       seasonEl.className = 'anime season';
-      seasonEl.innerHTML = generateAnimeHTML(season, false, true); // isSeason = true
+      seasonEl.innerHTML = generateAnimeHTML(season, false, true);
       container.appendChild(seasonEl);
     });
   }
@@ -395,10 +422,10 @@ async function showAllSeasons(animeName) {
 
 function showDeleteForm(nameEnglish, nameRussian) {
   animeToDelete = nameEnglish;
+  const form = document.getElementById('del-form');
   document.getElementById('del-form').style.display = 'flex';
 
-  const modalMessage = document.getElementById('modalMessage');
-  modalMessage.textContent = `Вы уверены, что хотите удалить "${nameRussian}"?`;
+  form.querySelector('h2').textContent = `Вы уверены, что хотите удалить "${nameRussian}"`;
 }
 
 

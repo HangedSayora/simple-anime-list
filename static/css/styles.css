@@ -1,68 +1,6 @@
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(3px);
-  user-select: none;
-}
-
-.modal-content {
-  background: #ffffff;
-  padding: 25px 30px;
-  border-radius: 15px;
-  width: 860px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transition: transform 0.2s ease;
-  animation: fadeIn 0.2s ease-out;
-  user-select: none;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.modal-content input {
-  width: 95%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-.modal-content input:focus {
-  border-color: #4CAF50;
-  outline: none;
-}
-
-.modal-content button {
-  padding: 10px 25px;
-  margin: 8px 5px 0;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.modal-content button:hover {
-  background-color: #45a049;
-}
-
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f4f9;
+  background: linear-gradient(0deg, #ffccd5, #ffccd5);
   color: #333;
   margin: 0;
   padding: 20px;
@@ -70,26 +8,14 @@ body {
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #000;
   font-size: 2.2rem;
   margin-bottom: 35px;
+  user-select: none;
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 8px;
-  margin: 10px 0;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
+h2 {
+  user-select: none;
 }
 
 label {
@@ -100,31 +26,186 @@ label {
 select {
   padding: 6px 10px;
   font-size: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  background: #ffccd5;
   transition: border-color 0.3s;
+  user-select: none;
 }
 
 select:focus {
-  border-color: #4CAF50;
+  border-color: #fc7b96;
   outline: none;
 }
 
+.anime-con select {
+  background: #ffb6c1;
+}
+
+input {
+  width: 34.5%;
+  padding: 12px;
+  margin-left: 0.35%;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #ffccd5;
+  user-select: none;
+}
+
+input:focus {
+  border: 2px solid #fc7b96;
+  outline: none;
+}
+
+button {
+  padding: 10px 25px;
+  margin: 8px 5px 0;
+  border: none;
+  background: #fc7b96;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid #fff;
+  user-select: none;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 182, 193, 0.6);
+}
+
+.anime-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 65px;
+  flex-wrap: wrap;
+  user-select: none;
+}
+
+.right-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.move-buttons {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.left-buttons {
+   position: relative;
+   display: flex;
+   gap: 5px;
+   right: 10.1%;
+  }
+
+.right-buttons button,
+.left-buttons button {
+  width: 160px;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.move-buttons button {
+  width: 16px;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.anime-buttons button {
+  padding: 10px 25px;
+  margin: 8px 5px 0;
+  border: none;
+  background: #fc7b96;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+}
+
+.anime-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 182, 193, 0.6);
+}
+
 .anime {
+  position: relative;
   display: flex;
   flex-direction: row;
-  background-color: #fff;
-  border-radius: 15px;
   padding: 20px;
   margin-bottom: 25px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s;
-  gap: 20px;
+}
+
+.anime:before {
+    content: '';
+    position: absolute;
+    width: 101%;
+    height: 104.5%;
+    left: -5px;
+    top: -5px;
+    background: linear-gradient(45deg,
+                                #ffccd5, #ffb3c2, #ff99af, #ff809b, #ff6688, #e64d6f, #cc3356,
+                                #b31a3c, #800022, #4d000f, #333333, #4d000f, #800022, #b31a3c,
+                                #cc3356, #e64d6f, #ff6688, #ff809b, #ff99af, #ffb3c2, #ffccd5,
+                                #ffffff, #ffccd5, #ffb3c2, #ff99af, #ff809b, #ff6688, #ff809b,
+                                #ff99af, #ffb3c2, #ffccd5, #ffffff, #ffccd5, #ffb3c2, #ff99af,
+                                #ff809b, #ff6688, #e64d6f, #cc3356, #b31a3c, #800022, #4d000f,
+                                #333333, #4d000f, #800022, #b31a3c, #cc3356, #e64d6f, #ff6688,
+                                #ff809b, #ff99af, #ffb3c2, #ffccd5, #333333, #4d000f, #800022,
+                                #b31a3c, #cc3356, #e64d6f, #ff6688, #ff809b, #ff99af, #ffb3c2,
+                                #ffccd5);
+    background-blend-mode: screen;
+    background-size: 1000%;
+    border-radius: 20px;
+    filter: blur(0px);
+    animation: glowing 100s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    transform: translate(-4px, -4px);
+    z-index: -1;
+}
+
+@keyframes glowing {
+    from { background-position: 0 0; }
+    to { background-position: 400% 0; }
+}
+
+.anime:after {
+    content: '';
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    background-color: #ffb6c1;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    left: 0;
+    top: 0;
+    z-index: -1;
 }
 
 .anime:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 .anime-left {
@@ -139,19 +220,7 @@ select:focus {
   border-radius: 10px;
 }
 
-.anime-left select {
-  padding: 6px 10px;
-  font-size: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #fff;
-  transition: border-color 0.3s;
-}
 
-.anime-left select:focus {
-  border-color: #4CAF50;
-  outline: none;
-}
 
 .anime-right {
   flex-grow: 1;
@@ -183,17 +252,6 @@ select:focus {
   margin-left: 44.5%;
 }
 
-.search-label {
-  margin-left: 0.4%;
-  width: 34.5%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s;
-  user-select: none;
-}
-
 .add-button {
   margin-bottom: 2%;
   user-select: none;
@@ -214,55 +272,6 @@ select:focus {
   color: #333;
 }
 
-.anime-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 65px;
-  flex-wrap: wrap;
-  user-select: none;
-}
-
-.right-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.move-buttons {
-  position: absolute;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.left-button {
-   position: relative;
-   display: flex;
-   gap: 15px;
-   right: 151px;
-  }
-
-.anime-buttons button {
-  background-color: #ff5722;
-  padding: 8px 14px;
-  font-size: 14px;
-  border-radius: 6px;
-  transition: background-color 0.3s;
-  color: white;
-  border: none;
-  cursor: pointer;
-  max-height: 40px;
-  overflow: hidden;
-}
-
-.anime-buttons button:hover {
-  background-color: #e64a19;
-}
-
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -276,18 +285,19 @@ select:focus {
   margin: 0 5px;
   padding: 5px 10px;
   cursor: pointer;
-  border: 1px solid #ddd;
-  background-color: #222222;
+  background-color: #fc7b96;
   border-radius: 5px;
+  border: 2px solid #fff;
 }
 
 .pagination-container button.active {
-  background-color: #4CAF50;
   color: white;
+  background-color: #fc6b85;
+  border: 2px solid #fc6b85;
 }
 
 .pagination-container button:hover {
-  background-color: #ddd;
+  
 }
 
 .pagination-prev, .pagination-next {
@@ -311,4 +321,7 @@ select:focus {
 .pagination-page {
   display: inline-block;
   margin: 0 10px;
+}
+.pagination-page button {
+  border-radius: 12px;
 }
