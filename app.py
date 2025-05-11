@@ -412,7 +412,6 @@ def add_season(name):
             if "seasons" not in anime:
                 anime["seasons"] = []
 
-            # Проверка на дубликат по имени или URL
             if any(s["name"] == info["name"] for s in anime["seasons"]):
                 return "Season already exists", 400
 
